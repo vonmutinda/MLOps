@@ -38,7 +38,7 @@ jobs:
           command: |
             echo "List all files and dirs"
             ls -a
-            . .mlops/bin/activate 
+            . ~/app/.mlops/bin/activate 
 
             hadolint Dockerfile 
             pylint --disable=R,C,W1202,W1203,W1202,C0114,C0103 app.py
