@@ -4,9 +4,9 @@ WORKDIR /app
 
 COPY . .
 
-RUN pip install --upgrade pip && \
-    pip install -r requirements.txt 
-    # hadolint ignore=DL3013
+RUN pip install --upgrade --no-cache-dir pip==22.2.2 \
+    && pip install --no-cache-dir -r requirements.txt \
+    && hadolint ignore=DL3013
 
 EXPOSE 80
 

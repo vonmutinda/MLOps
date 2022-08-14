@@ -4,7 +4,7 @@ jobs:
   build:
     docker:
       - image: circleci/python:3.6.7-stretch
-    working_directory: ~/repo
+    working_directory: ~/app
     steps:
       - checkout
       - restore_cache:
@@ -13,7 +13,7 @@ jobs:
           name: Install Dependencies
           command: |
             python3 -m venv .mlops
-            source ~/.mlops/bin/activate
+            source ./.mlops/bin/activate
             pip install -r requirements.txt
       - save_cache:
           paths:
@@ -24,13 +24,15 @@ jobs:
     docker:
       - image: circleci/python:3.6.7-stretch
     steps:
-      - checkout
+      - checkout 
+      - attach_workspace:
+          at: ~/app
       - restore_cache:
           key: mlops-deps
       - run:
           name: Scan MLOps Microservice
           command: |
-            source ~/.mlops/bin/activate
+            source ./.mlops/bin/activate
             make lint
 
 workflows:
