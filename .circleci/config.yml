@@ -13,7 +13,7 @@ jobs:
           name: Install Dependencies
           command: |
             python3 -m venv .mlops
-            pip install --upgrade pip==22.2.2
+            pip install --upgrade pip==21.3.1
             source ./.mlops/bin/activate
             pip install -r requirements.txt
       - save_cache:
