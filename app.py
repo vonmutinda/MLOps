@@ -1,4 +1,3 @@
-from statistics import mode
 from flask import Flask, request, jsonify
 from flask.logging import create_logger
 import logging
@@ -76,4 +75,4 @@ if __name__ == "__main__":
     dump(clf, model_path) 
     clf = load(model_path) 
 
-    app.run(host='0.0.0.0', port=80, debug=True) # specify port=80
+    app.run(host='0.0.0.0', port=8080, debug=True) # specify port=80
