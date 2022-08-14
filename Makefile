@@ -1,19 +1,16 @@
-## The Makefile includes instructions on environment setup and lint tests
-# Create and activate a virtual environment
-# Install dependencies in requirements.txt
-# Dockerfile should pass hadolint
-# app.py should pass pylint
-# (Optional) Build a simple integration test
 
+dockerpath:=vonmutinda/mlops
+port:=5050
+version:=v1.0.0
+
+# NB: source manually
 setup:
-	# Create python virtualenv & source it
-	# source ~/.devops/bin/activate
-	python3 -m venv ~/.devops
+	python3 -m venv .devops && \
+	source ./.devops/bin/activate
 
-install:
-	# This should be run from inside a virtualenv
-	pip install --upgrade pip &&\
-		pip install -r requirements.txt
+install: 
+	pip install --upgrade pip 
+	pip install -r requirements.txt
 
 test:
 	# Additional, optional, tests could go here
@@ -21,11 +18,34 @@ test:
 	#python -m pytest --nbval notebook.ipynb
 
 lint:
-	# See local hadolint install instructions:   https://github.com/hadolint/hadolint
-	# This is linter for Dockerfiles
-	hadolint Dockerfile
-	# This is a linter for Python source code linter: https://www.pylint.org/
-	# This should be run from inside a virtualenv
+	hadolint Dockerfile 
 	pylint --disable=R,C,W1203,W1202 app.py
 
-all: install lint test
+build:
+	docker build -t mlops .
+
+# e.g make tag version=v1.0.0
+tag:
+	docker tag mlops $(dockerpath):$(version)
+
+push:
+	docker push vonmutinda/mlops:$(version)
+
+server:
+	docker run --name mlops-$(version) -d -p $(port):80 mlops
+
+# e.g make deploy version=v1.0.2
+deploy:
+	kubectl create deploy mlops --image=$(dockerpath):$(version)
+
+rollback-deployment:
+	kubectl delete deployment.apps/mlops
+
+cluster-status:
+	kubectl get deploy,rs,svc,pods
+
+port-forward:
+	kubectl port-forward deployment.apps/mlops $(port):80
+
+stop:
+	docker stop mlops-$(version)
