@@ -32,8 +32,8 @@ jobs:
           name: Scan MLOps Microservice
           command: |
             echo "List Directory"
-            ls
-            source .mlops/bin/activate
+            ls -a
+            # source .mlops/bin/activate
             make lint
 
 workflows:
