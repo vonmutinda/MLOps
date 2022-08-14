@@ -1,18 +1,34 @@
 #!/usr/bin/env bash
 
-# This tags and uploads an image to Docker Hub
+# global vars
+dockerpath=vonmutinda/mlops
+environment=development
+port=5050
+version=v1.0.1
 
-# Step 1:
-# This is your Docker ID/path
-# dockerpath=<>
+# build image 
+docker build -t mlops .
 
-# Step 2
-# Run the Docker Hub container with kubernetes
+# tag image
+docker tag mlops $dockerpath:$version
 
+# push image to a docker repository
+echo "ENVIRONMENT: $environment"
 
-# Step 3:
-# List kubernetes pods
+if [ "$environment" = "production" ] 
+then
+    docker login
+    docker push $dockerpath:$version
+else
+    # clean up old deployment pod 
+    kubectl delete deployment.apps/mlops
+fi
 
-# Step 4:
-# Forward the container port to a host
+# deploy to k8s cluster
+kubectl create deploy mlops --image=$dockerpath:$version
 
+# describe deployments
+make cluster-status
+
+# port forward - NB: might fail if the pod is not ready
+kubectl port-forward deployment.apps/mlops $port:80

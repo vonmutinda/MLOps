@@ -1,12 +1,10 @@
 #!/usr/bin/env bash
 
-## Complete the following steps to get Docker running locally
+# NB: set dockerpath and version in the Makefile
+make build
 
-# Step 1:
-# Build image and add a descriptive tag
+make tag
 
-# Step 2: 
-# List docker images
+make server
 
-# Step 3: 
-# Run flask app
+docker ps | grep 'mlops'
