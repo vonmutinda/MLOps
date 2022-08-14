@@ -16,7 +16,7 @@ jobs:
             pip install -r requirements.txt
       - save_cache:
           paths:
-            - ./.mlops
+            - .mlops
           key: mlops-deps
 
   scan-mlops-service:
