@@ -26,6 +26,7 @@ jobs:
       - checkout 
       - attach_workspace:
           at: ~/app
+      working_directory: ~/app
       - restore_cache:
           key: mlops-deps
       - run:
