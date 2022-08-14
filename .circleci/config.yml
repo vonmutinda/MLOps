@@ -23,11 +23,11 @@ jobs:
     docker:
       - image: python:3.8.11
     steps:
-      - checkout 
+      - checkout
       - restore_cache:
           key: mlops-deps
       - attach_workspace:
-          at: ~/app 
+          at: ~/app
       - run:
           name: Install Hadolint
           command: |
@@ -38,8 +38,6 @@ jobs:
           command: |
             . ~/app/.mlops/bin/activate
             make lint
-            #hadolint Dockerfile 
-            #pylint --disable=R,C,W1202,W1203,W1202,C0114,C0103 app.py
 
 workflows:
   devops:
