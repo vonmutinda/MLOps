@@ -26,16 +26,22 @@ jobs:
       - checkout 
       - attach_workspace:
           at: ~/app
-      working_directory: ~/app
+      - working_directory: ~/app
       - restore_cache:
           key: mlops-deps
       - run:
+          name: Install Hadolint
+          command: |
+            wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v2.10.0/hadolint-Linux-x86_64
+      - run:
           name: Scan MLOps Microservice
           command: |
-            echo "List Directory"
+            echo "List all files and dirs"
             ls -a
-            # source .mlops/bin/activate
-            make lint
+            # source .mlops/bin/activate 
+
+            hadolint Dockerfile 
+            pylint --disable=R,C,W1202,W1203,W1202,C0114,C0103 app.py
 
 workflows:
   devops:

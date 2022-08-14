@@ -19,7 +19,7 @@ test:
 
 lint:
 	hadolint Dockerfile 
-	pylint --disable=R,C,W1203,W1202 app.py
+	pylint --disable=R,C,W1202,W1203,W1202,C0114,C0103 app.py
 
 build:
 	docker build -t mlops .
