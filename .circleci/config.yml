@@ -11,10 +11,12 @@ jobs:
       - run:
           name: Install Dependencies
           command: |
-            python3 -m venv .mlops
-            . .mlops/bin/activate
-            pip install --upgrade pip
-            pip install -r requirements.txt
+            make setup
+            make install
+            # python3 -m venv .mlops
+            # . .mlops/bin/activate
+            # pip install --upgrade pip
+            # pip install -r requirements.txt
       - run:
           name: Install Hadolint
           command: |
