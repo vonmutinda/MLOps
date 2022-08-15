@@ -15,3 +15,11 @@ pod/mlops-594c9f5b5d-lwtb5   1/1     Running   0          27s
 Forwarding from 127.0.0.1:5050 -> 80
 Forwarding from [::1]:5050 -> 80
 Handling connection for 5050
+
+(.venv) ➜  MLOps git:(main) ✗ ./make_prediction.sh 
+Port: 5050
+{
+  "prediction": [
+    20.35373177134412
+  ]
+}

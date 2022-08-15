@@ -1,5 +1,15 @@
 version: 2.1
 
+commands:
+  install-hadolint:
+    description: Install Hadolint
+    steps:
+      - run:
+          name: Install Hadolint
+          command: |
+            wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v2.10.0/hadolint-Linux-x86_64 && \
+            chmod +x /bin/hadolint
+
 jobs:
   build:
     docker:
@@ -8,6 +18,7 @@ jobs:
     working_directory: ~/app
     steps:
       - checkout
+      - install-hadolint
       - run:
           name: Install Dependencies
           command: | 
@@ -15,11 +26,6 @@ jobs:
             source .mlops/bin/activate
             pip install --upgrade pip
             pip install -r requirements.txt
-      - run:
-          name: Install Hadolint
-          command: |
-            wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v2.10.0/hadolint-Linux-x86_64 && \
-            chmod +x /bin/hadolint
       - run:
           name: Scan MLOps Microservice
           command: |
