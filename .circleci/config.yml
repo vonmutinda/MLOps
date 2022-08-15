@@ -24,10 +24,10 @@ jobs:
       - image: python:3.7.3-stretch
     steps:
       - checkout
-      - restore_cache:
-          key: mlops-deps
       - attach_workspace:
           at: ~/app
+      - restore_cache:
+          key: mlops-deps
       - run:
           name: Install Hadolint
           command: |
