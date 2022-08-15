@@ -45,5 +45,5 @@ workflows:
   devops:
     jobs:
       - build
-      - scan-mlops-service:
-          requires: [build]
+      # - scan-mlops-service:
+      #     requires: [build]
