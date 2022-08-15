@@ -1,5 +1,10 @@
 import logging
-from flask import Flask, request, jsonify
+from flask import (
+    Flask, 
+    request, 
+    jsonify
+)
+
 from flask.logging import create_logger
 
 import pandas as pd
