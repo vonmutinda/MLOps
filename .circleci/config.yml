@@ -11,7 +11,6 @@ jobs:
           name: Install Dependencies
           command: |
             python -m venv .mlops
-            ls -a
             source .mlops/bin/activate
             pip install --upgrade pip==22.2.2
             pip install -r requirements.txt
@@ -20,30 +19,31 @@ jobs:
             - .mlops
           key: mlops-deps
 
-  # scan-mlops-service:
-  #   docker:
-  #     - image: python:3.7.3-stretch
-  #   steps:
-  #     - checkout
-  #     - restore_cache:
-  #         key: mlops-deps
-  #     - attach_workspace:
-  #         at: ~/app
-  #     - run:
-  #         name: Install Hadolint
-  #         command: |
-  #           wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v2.10.0/hadolint-Linux-x86_64 && \
-  #           chmod +x /bin/hadolint
-  #     - run:
-  #         name: Scan MLOps Microservice
-  #         command: |
-  #           . ~/app/.mlops/bin/activate
-  #           hadolint Dockerfile
-  #           pylint --disable=R,C,W1202,W1203,W1202,C0114,C0103 app.py
+  scan-mlops-service:
+    docker:
+      - image: python:3.7.3-stretch
+    steps:
+      - checkout
+      - restore_cache:
+          key: mlops-deps
+      - attach_workspace:
+          at: ~/app
+      - run:
+          name: Install Hadolint
+          command: |
+            wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v2.10.0/hadolint-Linux-x86_64 && \
+            chmod +x /bin/hadolint
+      - run:
+          name: Scan MLOps Microservice
+          command: |
+            ls -a
+            source ~/app/.mlops/bin/activate
+            hadolint Dockerfile
+            pylint --disable=R,C,W1202,W1203,W1202,C0114,C0103 app.py
 
 workflows:
   devops:
     jobs:
       - build
-      # - scan-mlops-service:
-      #     requires: [build]
+      - scan-mlops-service:
+          requires: [build]
