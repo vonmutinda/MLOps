@@ -36,8 +36,7 @@ jobs:
       - run:
           name: Scan MLOps Microservice
           command: |
-            # . ~/app/.mlops/bin/activate
-            . .mlops/bin/activate
+            . ~/app/.mlops/bin/activate 
             # pip install -r requirements.txt
             # make lint
             python3 -m black .
