@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: python:3.8.11
+      - image: python:3.7.3-stretch
         user: root
     working_directory: ~/app
     steps:
@@ -12,7 +12,7 @@ jobs:
           name: Install Dependencies
           command: | 
             python3 -m venv .mlops
-            . .mlops/bin/activate
+            source .mlops/bin/activate
             pip install --upgrade pip
             pip install -r requirements.txt
       - run:
@@ -23,6 +23,7 @@ jobs:
       - run:
           name: Scan MLOps Microservice
           command: |
+            source .mlops/bin/activate
             hadolint Dockerfile
             pylint --disable=R,C,W1202,W1203,W1202,C0114,C0103 app.py
       - save_cache:
