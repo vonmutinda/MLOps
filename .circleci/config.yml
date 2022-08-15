@@ -10,9 +10,9 @@ jobs:
       - run:
           name: Install Dependencies
           command: |
-            python -m venv .mlops
-            source .mlops/bin/activate
-            pip install --upgrade pip==22.2.2
+            python3 -m venv .mlops
+            . .mlops/bin/activate
+            pip install --upgrade pip
             pip install -r requirements.txt
       - run:
           name: Install Hadolint
@@ -25,7 +25,7 @@ jobs:
           command: |
             hadolint Dockerfile
             pylint --disable=R,C,W1202,W1203,W1202,C0114,C0103 app.py
-
+            
       - save_cache:
           paths:
             - .mlops
