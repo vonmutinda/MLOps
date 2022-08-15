@@ -14,7 +14,6 @@ jobs:
             . .mlops/bin/activate
             pip install --upgrade pip==22.2.2
             pip install -r requirements.txt
-            pip install black
       - save_cache:
           paths:
             - .mlops
@@ -37,10 +36,7 @@ jobs:
       - run:
           name: Scan MLOps Microservice
           command: |
-            . ~/app/.mlops/bin/activate 
-            # pip install -r requirements.txt
-            # make lint
-            python3 -m black .
+            . ~/app/.mlops/bin/activate
             hadolint Dockerfile
             pylint --disable=R,C,W1202,W1203,W1202,C0114,C0103 app.py
 
