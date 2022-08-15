@@ -1,12 +1,12 @@
-FROM python:3.8
+FROM python:3.7.3-stretch
 
 WORKDIR /app
 
-COPY . .
+COPY . app.py model_data requirements.txt /app/
 
-RUN pip install --upgrade --no-cache-dir pip==22.2.2 \
-    && pip install --no-cache-dir -r requirements.txt \
-    && hadolint ignore=DL3013
+# hadolint ignore=DL3013
+RUN pip install --upgrade --no-cache-dir pip && \ 
+    pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 80
 

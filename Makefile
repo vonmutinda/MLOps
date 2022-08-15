@@ -4,9 +4,10 @@ port:=5050
 version:=v1.0.0
 
 # NB: source manually
+# Install python3.7 
 setup:
-	python3 -m venv .devops && \
-	source ./.devops/bin/activate
+	python3.7 -m venv .venv && \
+	source ./.venv/bin/activate
 
 install: 
 	pip install --upgrade pip 
@@ -18,7 +19,8 @@ test:
 	#python -m pytest --nbval notebook.ipynb
 
 lint:
-	hadolint Dockerfile 
+	python -m black .
+	hadolint Dockerfile
 	pylint --disable=R,C,W1202,W1203,W1202,C0114,C0103 app.py
 
 build:

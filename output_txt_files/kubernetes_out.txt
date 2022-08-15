@@ -1,1 +1,17 @@
-<paste log output from Kubernetes-mediated prediction, here>
+➜  MLOps git:(main) ✗ ./run_kubernetes.sh
+ENVIRONMENT: development
+deployment.apps "mlops" deleted
+deployment.apps/mlops created
+kubectl get deploy,rs,svc,pods
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/mlops   0/1     0            0           0s
+
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   4d2h
+
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/mlops-54fc458495-hfp7m   0/1     Pending   0          0s
+pod/mlops-594c9f5b5d-lwtb5   1/1     Running   0          27s
+Forwarding from 127.0.0.1:5050 -> 80
+Forwarding from [::1]:5050 -> 80
+Handling connection for 5050
