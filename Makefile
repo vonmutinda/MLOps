@@ -19,7 +19,7 @@ test:
 	#python -m pytest --nbval notebook.ipynb
 
 lint:
-	python -m black .
+	python3 -m black .
 	hadolint Dockerfile
 	pylint --disable=R,C,W1202,W1203,W1202,C0114,C0103 app.py
 
